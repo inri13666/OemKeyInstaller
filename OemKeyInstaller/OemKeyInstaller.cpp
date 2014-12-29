@@ -28,6 +28,12 @@ int RunA(LPSTR szRun)
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	printf("Version           : %s\n", "0.1");
+	printf("Author            : %s\n", "Nikita Makarov <mesaverde228@gmail.com>");
+	printf("Usage             :\n");
+	printf("-i   -- try to install key\n");
+	printf("-v   -- enable verbose mode\n");
+
 	DWORD FirmwareTableProviderSignature;
 	PVOID pFirmwareTableBuffer;
 	DWORD BufferSize;
@@ -157,6 +163,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		memcpy_s(ProductKey, SLS_DataLenght, (BYTE*)SLS + 20, SLS_DataLenght);
 
 		if (verbose) {
+
 			printf("Signature         : %s\n", Signature);
 			printf("Length            : %d\n", Length);
 			printf("Revision          : %d\n", Revision);
@@ -172,8 +179,11 @@ int _tmain(int argc, _TCHAR* argv[])
 			printf("SLS Data Reserved : %d\n", SLS_DataReserved);
 			printf("SLS Data Lenght   : %d\n", SLS_DataLenght);
 			printf("Key               : %s\n", ProductKey);
-		}
-		else {
+			printf("\n\nPress [Enter] to continue . . .");
+			fflush(stdout);
+			getchar();
+
+		} else {
 			printf("%s", ProductKey);
 		}
 		if (install){
@@ -188,11 +198,9 @@ int _tmain(int argc, _TCHAR* argv[])
 				return RunA(command);
 			}
 		}
+	}else{
+	 printf("Error: MSDM table not found\n");
 	}
-
-	//printf("\n\nPress [Enter] to continue . . .");
-	//fflush(stdout);
-	//getchar();
 	return 0;
 }
 
